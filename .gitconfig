@@ -9,15 +9,15 @@
 
 [credential "https://github.com"]
 	helper = 
-	helper = !/home/ubuntu/bin/nix/gh auth git-credential
+	helper = !gh auth git-credential
 
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/home/ubuntu/bin/nix/gh auth git-credential
+	helper = !gh auth git-credential
 
 [user]
 	email = iam@defn.sh
 	name = Amanibhavam
 
-[url "git@github.com:"]
-    insteadOf = https://github.com/
+#[url "git@github.com:defn/"]
+#    insteadOf = https://github.com/defn/
