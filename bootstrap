@@ -21,7 +21,7 @@ function main {
 	(
 		code-server --list-extensions
 		for a in 1 2; do for b in $exts; do echo "$b"; done; done
-	) | tr A-Z a-z | sort | uniq -c | grep ' 2 ' | while read -r count extension; do
+	) | tr A-Z a-z | sort -r | uniq -c | grep ' 2 ' | while read -r count extension; do
 		case "$(uname -s)-${extension}" in
 		Darwin-cuelang.cue)
 			true
