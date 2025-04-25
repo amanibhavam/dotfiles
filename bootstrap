@@ -18,15 +18,25 @@ function main {
 		rsync -ia ~/dotfiles/.gnupg/* ~/.gnupg/
 	)
 
-	local exts="vscodevim.vim golang.go esbenp.prettier-vscode cuelang.cue \
-	ms-python.python ms-python-debugpy kokakiwi.vscode-just svelte.svelte-vscode \
-	astro-build.astro-vscode betterthantomorrow.calva"
+	local exts="
+		astro-build.astro-vscode
+		betterthantomorrow.calva
+		betterthantomorrow.joyride
+		cuelang.cue
+		esbenp.prettier-vscode
+		golang.go
+		kokakiwi.vscode-just
+		ms-python.debugpy
+		ms-python.python
+		svelte.svelte-vscode
+		vscodevim.vim
+		"
 
 	(
 		code-server --list-extensions
 		for a in 1 2; do for b in $exts; do echo "$b"; done; done
 	) | tr A-Z a-z | sort -r | uniq -c | grep ' 2 ' | while read -r count extension; do
-		cached="$(set +f; (ls -d ~/m/vsix/$a-*.vsix 2>/dev/null || true)| head -1)"
+		cached="$(set +f; (ls -d ~/m/vsix/$extension-*.vsix 2>/dev/null || true)| head -1)"
 		if test -f "${cached}"; then
 			extension="${cached}"
 		fi
