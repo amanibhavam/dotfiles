@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# assumes running from $HOME
+
 function main {
 	source ~/.bash_profile
 
@@ -16,22 +18,19 @@ function main {
 		rsync -ia ~/dotfiles/.gnupg/* ~/.gnupg/
 	)
 
-	local exts="vscodevim.vim golang.go esbenp.prettier-vscode cuelang.cue ms-python.python kokakiwi.vscode-just svelte.svelte-vscode astro-build.astro-vscode betterthantomorrow.calva"
+	local exts="vscodevim.vim golang.go esbenp.prettier-vscode cuelang.cue \
+	ms-python.python ms-python-debugpy kokakiwi.vscode-just svelte.svelte-vscode \
+	astro-build.astro-vscode betterthantomorrow.calva"
 
 	(
 		code-server --list-extensions
 		for a in 1 2; do for b in $exts; do echo "$b"; done; done
 	) | tr A-Z a-z | sort -r | uniq -c | grep ' 2 ' | while read -r count extension; do
-		case "$(uname -s)-${extension}" in
-		Darwin-cuelang.cue)
-			true
-			;;
-		*)
-			if $(which code-server | head -1) serve-local --force --install-extension "${extension}"; then
-				true
-			fi
-			;;
-		esac
+		cached="$(set +f; (ls -d ~/m/vsix/$a-*.vsix 2>/dev/null || true)| head -1)"
+		if test -f "${cached}"; then
+			extension="${cached}"
+		fi
+		$(which code-server | head -1) serve-local --force --install-extension "${extension}"
 	done
 }
 
