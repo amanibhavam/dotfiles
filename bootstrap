@@ -20,6 +20,7 @@ function main {
 
 	# https://status.open-vsx.org
 	local exts="
+		anthropic.claude-code
 		astro-build.astro-vscode
 		betterthantomorrow.calva
 		betterthantomorrow.joyride
